@@ -1,0 +1,32 @@
+services:
+  mongo:
+    image: mongo
+    networks:
+      - sample_network
+    ports:
+      - 27018:27017
+    environment:
+      - MONGODB_INITDB_ROOT_USERNAME=username
+      - MONGODB_INITDB_ROOT_PASSWORD=password
+  frontend:
+    build: ./frontend
+    depends_on:
+      - api
+    ports:
+      - 3002:3000
+    networks:
+      - sample_network
+  api:
+    build: ./backend
+    depends_on:
+      - mongo
+    ports:
+      - 3001:3001
+    networks:
+      - sample_network
+networks:
+  sample_network:
+    driver: bridge
+volumes:
+  mongodb_vol:
+    name: mongodb_vol
