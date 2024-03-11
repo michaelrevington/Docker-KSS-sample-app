@@ -3,8 +3,6 @@ services:
     image: mongo
     networks:
       - sample_network
-    ports:
-      - 27018:27017
     environment:
       - MONGODB_INITDB_ROOT_USERNAME=username
       - MONGODB_INITDB_ROOT_PASSWORD=password
@@ -22,6 +20,8 @@ services:
       - mongo
     ports:
       - 3001:3001
+    environment:
+      - DB_CONNECTION_STRING=mongodb://mongo:27017/todos
     networks:
       - sample_network
 networks:
